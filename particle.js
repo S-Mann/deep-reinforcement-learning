@@ -71,7 +71,11 @@ class Particle {
   }
 
   calculateFitness() {
-    this.fitness = pow(2, this.fitness);
+    if(this.fitness >= maxFitness*0.8){
+      this.fitness = pow(20, this.fitness);
+    }else{
+      this.fitness = pow(2, this.fitness);
+    }
     // if (this.finished) {
     // } else {
     //   const d = p5.Vector.dist(this.pos, target);

@@ -1,11 +1,13 @@
-// Daniel Shiffman
+// 2D Ray Casting
+// https://editor.p5js.org/codingtrain/sketches/Nqsq3DFv-
 
 const TOTAL = 100;
 const MUTATION_RATE = 0.1;
 const LIFESPAN = 25;
-const SIGHT = 100;
+const SIGHT = 50;
 
 let generationCount = 0;
+let maxRewardAchievedCount = 0;
 
 let walls = [];
 let ray;
@@ -35,9 +37,9 @@ function buildTrack() {
   inside = [];
   outside = [];
 
-  let noiseMax = 4;
+  let noiseMax = 3;
   const total = 60;
-  const pathWidth = 60;
+  const pathWidth = 40;
   let startX = random(1000);
   let startY = random(1000);
   for (let i = 0; i < total; i++) {
@@ -112,6 +114,10 @@ function draw() {
       if (!changeMap && particle.fitness > maxFitness) {
         changeMap = true;
       }
+      
+      if(particle.fitness > maxFitness){
+        maxRewardAchievedCount++;
+      }
     }
 
     if (population.length !== 0 && changeMap) {
@@ -146,9 +152,12 @@ function draw() {
   bestP.highlight();
 
   fill(255);
-  textSize(24);
+  textSize(20);
   noStroke();
-  text('generation ' + generationCount, 10, 50);
+  text('Generation ' + generationCount, 10, 50);
+  text('Completed Max Reward ' + maxRewardAchievedCount, 10, 70);
+  text('Max Reward ' + bestP.fitness, 10, 90);
+  text('Alive ' + population.length, 10, 110);
 
   // ellipse(start.x, start.y, 10);
   // ellipse(end.x, end.y, 10);
